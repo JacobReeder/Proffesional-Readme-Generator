@@ -1,27 +1,30 @@
 //ADDED FROM MODULE PROJECT(keep in this order) //
-//const inquirer = require('inquirer'); // Add descrip
-//const fs = require('fs'); // Add descrip
-//const generatePage = require(''); // Add descrip
+const inquirer = require('inquirer'); // Add descrip
+const fs = require('fs'); // Add descrip
+const pageRead = require(''); // Add descrip // should this be defined as pageRead instead?
 
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//SATURDAY: block out each code section and individually test code
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // TODO: Create an array of questions for user input
 //const questions = [
-   // What is the title of your project? DONE
-   //Edit title?
-   //Does your README have a descrption? DONE
-   //Edit Descrption?
-   //Does your README have a table of contents? DONE
-   //Edit table of contents?
-   //Edit installation description? DONE
-   //Edit usage section? DONE
+  
    //Edit credits section?
    //edit license sectiion?
 
    //ALSO
    //Create a new README?
 
-   /*const promptUser = () => {
+   const questions = () => {
     return inquirer.prompt([
       {
           type: 'input',
@@ -78,26 +81,20 @@
        {
           type: 'input',
           name: 'usage',
-          message: 'What is the README's Usage?(Required)',
+          message: 'What is the READMEs Usage?(Required)',
           validate: ({confirmUsage}) => {
               if (confirmUsage) {
                   return true;
               } else {
-                  console.log('Please enter the README's Usage section');
+                  console.log('Please enter the READMEs Usage section');
                   return false;
               }
           }
+        }
     ]);
   };
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
   
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-  EXTRA CODE TO WORK WITH ----
-  /*
-  const promptProject = portfolioData => { /////To add a new project.
+  const newProject = portfolioData => { /////To add a new project.
       if (!portfolioData.projects) {
       portfolioData.projects = [];
       }
@@ -109,13 +106,13 @@
       return inquirer.prompt([
         {
           type: 'input',
-          name: 'name',
-          message: 'What is the name of your project?'
+          name: '',
+          message: ''
         },
         {
           type: 'input',
-          name: 'description',
-          message: 'Provide a description of the project (Required)'
+          name: '',
+          message: ''
         },
         {
           type: 'checkbox',
@@ -125,8 +122,8 @@
         },
         {
           type: 'input',
-          name: 'link',
-          message: 'Enter the GitHub link to your project. (Required)'
+          name: '',
+          message: ''
         },
         {
           type: 'confirm',
@@ -145,23 +142,8 @@
       ]);
     };
   
-    promptUser()
-    .then(promptProject)
-    .then(portfolioData => {
-      const pageHTML = generatePage();
-  
-      // fs.writeFile('./index.html', pageHTML, err => {
-      //   if (err) throw new Error(err);
-  
-      //   console.log('Page created! Check out index.html in this directory to see it!');
-      // });
-    });
-  
-  
-    /*promptUser()
-    .then(answers => console.log(answers))
-    .then(promptProject)
-    .then(projectAnswers => console.log(projectAnswers))
+    questions()
+    .then(newProject)
     .then(projectData => {
       portfolioData.projects.push(projectData);
       if (projectData.confirmAddProject) {
@@ -169,41 +151,35 @@
         } else {
           return portfolioData;
         }
-  });*/
-//];
+  });
 
-///////////////////////////////////////////////////
-
-/*NOTES ------
-
-  // fs.writeFile('./index.html', pageHTML, err => { ///////////Reasearch fs.write --can it also write README's?
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-  Try this code block --
-  const fs = require('fs')
-
-fs.writeFile('README.md', 'Hello World', (err) => {
-	// If there is any error in writing to the file, return
-	if (err) {
-		console.error(err)
-		return
-	}
-
-	// Log this message if the file was written to successfully
-	console.log('wrote to file successfully')
-})
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      //   if (err) throw new Error(err);
   
-      //   console.log('Page created! Check out index.html in this directory to see it!');
-      // });
-    });
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // TODO: Create a function to write README file ///Reference earlier in module 9 - lesson 2 and 3 -
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+
+  fs.writeFile('./README.md', pageRead, err => {
+    // If there is any error in writing to the file, return
+    //   if (err) throw new Error(err);
+    if (err) {
+      console.error(err)
+      return
+    }
+  
+    // Log this message if the file was written to successfully
+    console.log('wrote to file successfully')
+  })
+}
 
 // TODO: Create a function to initialize app
 function init() {}
 
+
 // Function call to initialize app
-init();*/
+init();
+const pageRead = writeToFile();
