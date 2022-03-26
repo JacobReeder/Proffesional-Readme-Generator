@@ -1,7 +1,7 @@
 //ADDED FROM MODULE PROJECT(keep in this order) //
 //const inquirer = require('inquirer'); // Add descrip
-const fs = require('fs'); // The require statement is a built-in function that's globally available in Node.js. It allows the app.js file to access the fs module's functions through the fs assignment.
-const pageRead = require(''); // use this to define file path
+//const fs = require('fs'); // The require statement is a built-in function that's globally available in Node.js. It allows the app.js file to access the fs module's functions through the fs assignment.
+//const pageRead = require(''); // use this to define file path
 //const [//questions input goes here?] =
 //define 'fileName' and 'data'
 
