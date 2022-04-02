@@ -1,76 +1,16 @@
-//ADDED FROM MODULE PROJECT(keep in this order) //
-//const inquirer = require('inquirer'); // Add descrip
-//const fs = require('fs'); // The require statement is a built-in function that's globally available in Node.js. It allows the app.js file to access the fs module's functions through the fs assignment.
-//const pageRead = require(''); // use this to define file path
-//const [//questions input goes here?] =
-//define 'fileName' and 'data'
+//const fs = require('fs');
+const inquirer = require('inquirer');
+const generatePage = require('./src/page-template');
+const { writeFile } = require('./util/generateMarkdown');
 
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//SATURDAY: block out each code section and individually test code
-  
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//NOTES
-//process.argv.slice(2, process.argv.length - 1);? It turns out .slice() returns everything from the first 
-////zero-based index we provide as the first argument up to but not including the zero-based index 
-//we provide as the second argument (9.1.5)
-
-//when we use the const keyword instead of var to create a variable,
-// we're locking down what that variable will be. Once we declare it, we can never reassign it. 
-
-/////////////ARRAY EXAMPLE AND DESCRIP/////////////////////////////////////////////////////////////////
-
-/*const animalArray = ['dog', 'cat', 'pig'];
-
-animalArray.push('cow');
-
-const personObj = {
-  name: 'Lernantino',
-  age: 99
-};
-
-personObj.age = 100;
-personObj.occupation = 'Developer';
-If we ran the preceding code, we wouldn't get an error, and the .push() method would work as expected. We could also add, edit, or remove properties from the personObj without an error. So what's the difference between this example and the previous one?
-
-In the example with message and sum, we attempted to directly assign a brand-new value to the variables. In the second example, we didn't reassign the values of animalArray and personObj but rather edited the content inside those values.
-
-The JavaScript engine sees those const variable values and just sees an array and an object. It has no idea what's going on between those square or curly brackets.
-
-*/
-
-//* Using function expression syntax
-/*const addNums = function(numOne, numTwo) {
-  return numOne + numTwo;
-};
-
-// Using new arrow function syntax
-const addNums = (numOne, numTwo) => {
-  return numOne + numTwo;
-};*/
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// TODO: Create an array of questions for user input
-//const questions = [
-  
-   //Edit credits section?
-   //edit license sectiion?
-
-   //ALSO
-   //Create a new README?
-
-   /*const questions = () => {
+////////// Questions Array /////////////////
+///Liscense section on 'generate Markdown//
+const readMeQuestions = () => {   
      
     return inquirer.prompt([
       {
           type: 'input',
-          name: 'title',
+          name: '### Title',
           message: 'What is the title of your project? (Required)',
           validate: titleInput => {
               if (titleInput) {
@@ -83,8 +23,8 @@ const addNums = (numOne, numTwo) => {
       },
       {
          type: 'input',
-         name: 'description',
-         message: 'What if your README description?(Required)', 
+         name: '## Description',
+         message: 'What is your README description?(Required)', 
          validate: descripInput => {
           if (descripInput) {
               return true;
@@ -95,10 +35,10 @@ const addNums = (numOne, numTwo) => {
       }
       }, 
        {
-          type: 'input',
-          name: 'Contents',
+          type: 'input',   //////Needs to include functional links to other parts of the readme
+          name: '## Contents',
           message: 'What will your Table of Contents be? (Required)',
-          validate: ({confirmContents}) => {
+          validate: (confirmContents) => {
               if (confirmContents) {
                   return true;
               } else {
@@ -109,7 +49,7 @@ const addNums = (numOne, numTwo) => {
         },
       {
          type: 'input',
-         name: 'installation',
+         name: '## Installation',
          message: '(Required)', 
          validate: installInput => {
           if (installInput) {
@@ -122,9 +62,9 @@ const addNums = (numOne, numTwo) => {
       },
        {
           type: 'input',
-          name: 'usage',
+          name: '## Usage',
           message: 'What is the READMEs Usage?(Required)',
-          validate: ({confirmUsage}) => {
+          validate: (confirmUsage) => {
               if (confirmUsage) {
                   return true;
               } else {
@@ -132,19 +72,31 @@ const addNums = (numOne, numTwo) => {
                   return false;
               }
           }
-        }
+        },
+          {
+            type: 'input',
+            name: '## Contributions',
+            message: '?(Required)',
+            validate: (confirm) => {
+                if (confirm) {
+                    return true;
+                } else {
+                    console.log('Please enter the READMEs Usage section');
+                    return false;
+                }
+            },
+       
+       
+       
+          }
+
     ]);
   };
-  
-  const newProject = portfolioData => { /////To add a new project.
+  ///////Use this for the 'Questions?' section?
+  /*const questionsSection = portfolioData => { /////To add a new project.
       if (!portfolioData.projects) {
       portfolioData.projects = [];
       }
-      console.log(`
-    =================
-    Add a New Project
-    =================
-    `);
       return inquirer.prompt([
         {
           type: 'input',
@@ -182,48 +134,28 @@ const addNums = (numOne, numTwo) => {
   
        
       ]);
-    };
-  
-    questions()
-    .then(newProject)
-    .then(projectData => {
-      portfolioData.projects.push(projectData);
-      if (projectData.confirmAddProject) {
-          return promptProject(portfolioData);
-        } else {
-          return portfolioData;
-        }
-  });*/
+    };*/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const profileDataArgs = process.argv.slice(2);
 
+  if (profileDataArgs.length === 0) {
 
-  
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// TODO: Create a function to write README file ///Reference earlier in module 9 - lesson 2 and 3 -
-//*function writeToFile(/*fileName,*/ data) { //equivalent of generatePage in 9.2.4
-      
-  //fs.writeToFile('./README.md', writeToFile, err => {
-    // If there is any error in writing to the file, return
-    //   if (err) throw new Error(err);
-    //if (err) {
-     // console.error(err)
-    ///  return
-    /*}
-  
-    // Log this message if the file was written to successfully
-    console.log('wrote to file successfully')
+  readMeQuestions() /////code is refactored, needs to be tested
+  .then(questionSection)
+  .then(answers => {
+    console.log(answers)
+    return generatePage(answers);
   })
-}
-
-// TODO: Create a function to initialize app
-//*function init() {}
-
-
-// Function call to initialize app
-//*init();
-//*const pageRead = writeToFile();*/
+  .then(portfolioData => {
+    return writeFile(portfolioData); ///generatePage returns CSS in original project. Use README template form instead. //
+  })
+  .catch(err => {   ////what would be the equivalent of generatePage for this project?
+    console.log(err);  ///was originally pageHTML 
+  });
+  
+} else if (( profileDataArgs.length > 0) && (profileDataArgs[0].toLowerCase() === "test") ) {
+   console.log(generatePage())
+};
+  
 
 
