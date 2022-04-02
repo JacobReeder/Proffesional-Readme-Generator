@@ -1,6 +1,4 @@
-const fs = require('fs');
-const profileDataArgs = process.argv.slice(2, process.argv.length);
-const [data] = profileDataArgs;
+
 
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
@@ -14,23 +12,24 @@ const [data] = profileDataArgs;
 // If there is no license, return an empty string
 //function renderLicenseSection(license) {}
 
-// A function to generate markdown for README
-const generateMarkdown = (data) => {
-    return `
-    Foobar is a Python library for dealing with word pluralization.
+const fs = require('fs');
 
-    ## Installation
-    ${data}
-     `;
+const writeFile = fileContent => {
+  return new Promise((resolve, reject) => { /////Function gets this far before breaking, reasearch more
+    fs.writeFile('./dist/README.MD', fileContent, err => { 
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve({
+        ok: true,
+        message: 'File created!'
+      });
+    });
+  });
 };
 
-console.log(generateMarkdown('README BITCH!'));
-
-fs.writeFile('README.MD', generateMarkdown(data), err => {
-    if (err) throw err;
-  
-    console.log('README complete! Check out README.MD to see the output!');
-  });
 
 
-/*module.exports = generateMarkdown;*/
+module.exports = { writeFile };
