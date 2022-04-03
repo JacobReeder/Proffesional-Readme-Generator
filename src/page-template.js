@@ -51,4 +51,4 @@ ${tests}
     `;
 };
 
-module.exports = generateMD;
+module.exports = {generateMD};

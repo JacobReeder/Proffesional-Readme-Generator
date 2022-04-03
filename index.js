@@ -1,7 +1,7 @@
 
 const fs = require('fs');
 const inquirer = require('inquirer');
-const generateMD = require('./src/page-template');
+const { generateMD } = require('./src/page-template');
 
 
 ////////// Questions Array /////////////////
