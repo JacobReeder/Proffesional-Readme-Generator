@@ -3,6 +3,8 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const { generateMD } = require('./src/page-template');
 
+const { writeFile, copyFile } = require('./utils/generateMarkdown');
+
 
 ////////// Questions Array /////////////////
 ///////////////////////////////////////////
@@ -84,10 +86,30 @@ const readMeQuestions = () => {
     }
 
     ]);
-   
-  };
 
-  ///////////////////fs.writeFile/////////////////////////////////
+};
+   
+
+  readMeQuestions()
+  
+  .then(fileContent => {
+    return generateMD(fileContent);
+  })
+  .then(newReadMe => {
+    return writeFile(newReadMe);
+  })
+  .then(writeFileResponse => {
+    console.log(writeFileResponse);
+    return copyFile();
+  })
+  .then(copyFileResponse => {
+    console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+  /*///////////////////fs.writeFile/////////////////////////////////
 
     readMeQuestions()
 .then(answers => {
@@ -97,6 +119,6 @@ const readMeQuestions = () => {
             if(err) throw new Error(err);
             console.log('Readme file created!');
         });
-});
+});*/
 
 

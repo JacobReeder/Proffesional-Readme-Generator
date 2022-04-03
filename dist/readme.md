@@ -1,8 +1,25 @@
+const generateMD = (answers) => {
 
-    # undefined
-undefined
+    const {
+        title,
+        description,
+        installation,
+        usage,
+        credits,
+        license,
+        contributing,
+        tests,
+        gitRepo,
+        email
+
+    } = answers;
+    
+
+    return `
+    # ${title}
+${license}
 ## Description 
-undefined
+${description}
 ## Table of Contents (Optional)
 
 * [Installation](#installation)
@@ -13,22 +30,25 @@ undefined
 * [Tests](#tests)
 
 ## Installation
-undefined
+${installation}
 
 ## Usage 
-undefined
+${usage}
 
 ## Credits
-undefined
+${credits}
 
 ## Contributing
-undefined
+${contributing}
 
 ## Tests
-undefined
+${tests}
 
 ## Questions
-<a href="https://github.com/undefined">My github</a> 
+<a href="https://github.com/${gitRepo}">My github</a> 
 <br>
-<a href="mailto:p"> My Email </a>
-    
+<a href="mailto:${email}"> My Email </a>
+    `;
+};
+
+module.exports = {generateMD};
