@@ -1,25 +1,8 @@
-const generateMD = (answers) => {
 
-    const {
-        title,
-        description,
-        installation,
-        usage,
-        credits,
-        license,
-        contributing,
-        tests,
-        gitRepo,
-        email
+    # Readme Generator
 
-    } = answers;
-    
-
-    return `
-    # ${title}
-${license}
 ## Description 
-${description}
+Dynamically generates README.MD files from the command line using Node.JS.
 ## Table of Contents (Optional)
 
 * [Installation](#installation)
@@ -30,25 +13,22 @@ ${description}
 * [Tests](#tests)
 
 ## Installation
-${installation}
+Intalling Node.JS and the inquirer package are required in order to use this apllication.
 
 ## Usage 
-${usage}
+When application is opened, user will be asked a number of prompt questions. Answer these questions to generate the README.MD files.
 
 ## Credits
-${credits}
+
 
 ## Contributing
-${contributing}
+
 
 ## Tests
-${tests}
+
 
 ## Questions
-<a href="https://github.com/${gitRepo}">My github</a> 
+<a href="https://github.com/undefined">My github</a> 
 <br>
-<a href="mailto:${email}"> My Email </a>
-    `;
-};
-
-module.exports = {generateMD};
+<a href="mailto:jacob.reeder1@gmail.com"> My Email </a>
+    

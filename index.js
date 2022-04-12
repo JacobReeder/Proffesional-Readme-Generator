@@ -1,19 +1,38 @@
 
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { generateMD } = require('./src/page-template');
-
-const { writeFile, copyFile } = require('./utils/generateMarkdown');
+const { MDgenerate } = require('./utils/generateMarkdown');
 
 
 ////////// Questions Array /////////////////
 ///////////////////////////////////////////
-const readMeQuestions = () => {   
-     
-    return inquirer.prompt([
+
+
+const readMeQuestions = () => {
+  return inquirer.prompt([
       {
           type: 'input',
-          name: 'Title',
+          name: 'sample',
+          message: 'Wlecome to the Readme generator.'
+      }
+           ]);
+};
+
+const questionsMD = (readmeData) => {
+  console.log(`
+      
+      New README
+      
+  `);
+console.log(readmeData);
+  
+  if (!readmeData.projects) {
+      readmeData.projects = [];
+  }
+  return inquirer.prompt([
+      {
+          type: 'input',
+          name: 'title',
           message: 'What is the title of your project? (Required)',
           validate: titleInput => {
               if (titleInput) {
@@ -26,7 +45,7 @@ const readMeQuestions = () => {
       },
       {
          type: 'input',
-         name: 'Description',
+         name: 'description',
          message: 'What is your README description?(Required)', 
          validate: descripInput => {
           if (descripInput) {
@@ -40,43 +59,38 @@ const readMeQuestions = () => {
 
       {
         type: 'input',
-        name: 'Installation',
+        name: 'installation',
         message: 'What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.'
       },
       {
         type: 'input',
-        name: 'Usage',
+        name: 'usage',
         message: 'Provide instructions and examples for use.'
       },
       {
         type: 'input',
-        name: 'Credits',
+        name: 'credits',
         message: 'List your collaborators, if any, with links to their GitHub profiles.'
       },
-      {
-        type: 'list',
-        name: 'License',
-        message: 'Let other developers know what they can and cannot do with your project.',
-        choices: ['Apache', 'GNU', 'MIT'] 
-    },
+      
     
      
     {
         type: 'input',
-        name: 'Contributions',
+        name: 'contributions',
         message: 'List contributions, if any, to this project.',
         
     },
    
     {
         type: 'input',
-        name: 'Tests',
+        name: 'tests',
         message: 'Tests for the application.',
         
     },  
     {
         type: "input",
-        name: 'GitHub',
+        name: 'github',
         message: "Include your github repository link."
     },
     {
@@ -88,37 +102,39 @@ const readMeQuestions = () => {
     ]);
 
 };
+
+const writeFile = fileContent => {
+ 
+return new Promise ((resolve, reject) => {
+    
+    fs.writeFile('./dist/README.md', fileContent, err => {
+        if(err) {
+            reject(err);
+            return;
+        }
+        resolve({
+            ok:true,
+            message: 'README.MD ready!'
+        });
+    });
+});
+};
+
+
+readMeQuestions()
+  .then(questionsMD)
+  .then(readmeData => {
+      console.log("readmeData", readmeData);
+  const readMe = MDgenerate(readmeData);
+  console.log('Readme', readMe);
+  return writeFile(readMe);
+  })
+   .catch(err => {
+      console.log(err);
+  });
    
 
-  readMeQuestions()
   
-  .then(fileContent => {
-    return generateMD(fileContent);
-  })
-  .then(newReadMe => {
-    return writeFile(newReadMe);
-  })
-  .then(writeFileResponse => {
-    console.log(writeFileResponse);
-    return copyFile();
-  })
-  .then(copyFileResponse => {
-    console.log(copyFileResponse);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-  /*///////////////////fs.writeFile/////////////////////////////////
-
-    readMeQuestions()
-.then(answers => {
-    console.log(answers);
-    const fileContent = generateMD(answers);
-        fs.writeFile('./dist/readme.md', fileContent, err=>{
-            if(err) throw new Error(err);
-            console.log('Readme file created!');
-        });
-});*/
+  
 
 
